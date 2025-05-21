@@ -50,9 +50,9 @@ class _WeatherPageState extends State<WeatherPage> {
   String? _error;
 
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
-    await WidgetTracker.instance.trackWidgetStart("Main");
+    // await WidgetTracker.instance.trackWidgetStart("Main");
     _fetchWeather();
   }
 
