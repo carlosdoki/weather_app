@@ -50,8 +50,9 @@ class _WeatherPageState extends State<WeatherPage> {
   String? _error;
 
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
+    await WidgetTracker.instance.trackWidgetStart("Main");
     _fetchWeather();
   }
 
@@ -60,7 +61,9 @@ class _WeatherPageState extends State<WeatherPage> {
       'https://api.openweathermap.org/data/2.5/weather?lat=-23.4682814&lon=-46.8737504&appid=$apiKey',
     );
     try {
-      final response = await http.get(url);
+      final client = TrackedHttpClient(http.Client());
+      final response = await client.get(Uri.parse(url.toString()));
+      // final response = await http.get(url);
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         setState(() {
